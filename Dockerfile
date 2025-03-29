@@ -1,20 +1,18 @@
-# Use an official Node.js runtime as a parent image
-FROM node:18-alpine
+# Use an official Python image
+FROM python:3.9-alpine
 
-# Set the working directory in the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json before installing dependencies
-COPY package.json ./
+# Copy requirements and install dependencies
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Copy the application files
 COPY . .
 
-# Expose port 3000 for the React development server
-EXPOSE 3000
+# Expose port 5000
+EXPOSE 5000
 
-# Start the React application
-CMD ["npm", "start"]
+# Start the Flask app
+CMD ["python", "app.py"]
